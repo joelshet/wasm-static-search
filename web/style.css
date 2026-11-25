@@ -1,0 +1,199 @@
+/* How <text-search> looks. Every rule sits in the text-search layer and inside :where(), so any rule of a page's own
+   wins without !important, whatever its specificity.
+
+   A theme is a set of the tokens below, chosen with <text-search theme="paper">. With no theme the element takes the
+   font and colors of the page around it. To change one thing, set its token on the element itself:
+
+     text-search { --ts-accent: teal; --ts-font: "Inter", sans-serif; }
+
+   A token set to initial leaves that property to the page around it. Colors use light-dark(), so they follow whichever
+   color-scheme the element inherits; text-search { color-scheme: dark } holds it dark. */
+@layer text-search {
+  :where(text-search) {
+    --ts-paper: transparent;                                       /* background */
+    --ts-ink: currentColor;                                        /* text */
+    --ts-quiet: color-mix(in srgb, currentColor 62%, transparent); /* the status line, a result's place, the footer */
+    --ts-rule: color-mix(in srgb, currentColor 18%, transparent);  /* lines between results */
+    --ts-accent: currentColor;                                     /* a result's reference, focus rings, links */
+    --ts-mark: color-mix(in srgb, currentColor 16%, transparent);  /* behind the words a search found */
+    --ts-found: currentColor;                                      /* the words a search found */
+    --ts-found-weight: initial;
+    --ts-here: var(--ts-mark);                                     /* behind the found line in an opened result */
+    --ts-font: initial;
+    --ts-font-ui: initial;                                         /* small type: status, references, footer */
+    --ts-font-code: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --ts-size: initial;
+    --ts-small: 0.8em;
+    --ts-leading: initial;
+    --ts-width: none;                                              /* the widest a line of results runs */
+    --ts-radius: 0.35em;
+    --ts-box-border: 1px;                                          /* the search box's border widths, as border-width */
+    --ts-box-line: var(--ts-rule);
+    --ts-box-padding: 0.5em 0.65em;
+    --ts-box-size: 1.15em;
+    --ts-box-weight: initial;
+    --ts-box-ring: 2px solid var(--ts-accent);                     /* the search box's outline while typing */
+
+    display: block;
+    background: var(--ts-paper);
+    color: var(--ts-ink);
+    font-family: var(--ts-font);
+    font-size: var(--ts-size);
+    line-height: var(--ts-leading);
+  }
+
+  /* Cream paper, serif type and a red accent: the look the bundled page has always had. */
+  :where(text-search[theme="paper"]) {
+    --ts-paper: light-dark(#fbfaf7, #111111);
+    --ts-ink: light-dark(#1d1c1a, #ece9e2);
+    --ts-quiet: light-dark(#6b675f, #9d998f);
+    --ts-rule: light-dark(#e4e0d7, #2b2a27);
+    --ts-accent: light-dark(#9b2c1f, #e3836f);
+    --ts-mark: light-dark(#f3e3a8, #5b4a12);
+    --ts-font: ui-serif, Georgia, "Iowan Old Style", serif;
+    --ts-font-ui: ui-sans-serif, system-ui, sans-serif;
+    --ts-size: 18px;
+    --ts-small: 0.75em;
+    --ts-leading: 1.5;
+    --ts-width: 44rem;
+    --ts-radius: 6px;
+    --ts-box-size: 1em;
+  }
+
+  /* swiss: black on white in Helvetica, an underlined search box, and found words in bold. Its dark side inverts
+     every color. */
+  :where(text-search[theme="swiss"]) {
+    --ts-paper: light-dark(#fff, #000);
+    --ts-ink: light-dark(#000, #fff);
+    --ts-quiet: light-dark(#8a8a8a, #757575);
+    --ts-rule: light-dark(#eee, #111);
+    --ts-accent: var(--ts-ink);
+    --ts-mark: transparent;
+    --ts-found-weight: 700;
+    --ts-here: light-dark(#f7f7f7, #080808);
+    --ts-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --ts-font-ui: var(--ts-font);
+    --ts-size: 1.0625rem;
+    --ts-small: 0.765em;
+    --ts-leading: 1.65;
+    --ts-width: 36rem;
+    --ts-radius: 0;
+    --ts-box-border: 0 0 1px;
+    --ts-box-line: var(--ts-ink);
+    --ts-box-padding: 0 0 0.2em;
+    --ts-box-size: 1.5em;
+    --ts-box-weight: 600;
+    --ts-box-ring: none;
+  }
+
+  /* The device's own: the browser's system colors and the system font, so it looks native everywhere. */
+  :where(text-search[theme="system"]) {
+    --ts-paper: Canvas;
+    --ts-ink: CanvasText;
+    --ts-quiet: color-mix(in srgb, CanvasText 62%, Canvas);
+    --ts-rule: color-mix(in srgb, CanvasText 14%, Canvas);
+    --ts-accent: LinkText;
+    --ts-mark: color-mix(in srgb, Mark 45%, Canvas);
+    --ts-font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --ts-font-ui: var(--ts-font);
+    --ts-size: 1rem;
+    --ts-leading: 1.5;
+    --ts-width: 40rem;
+    --ts-radius: 8px;
+    --ts-box-line: color-mix(in srgb, CanvasText 28%, Canvas);
+  }
+
+  :where(text-search) > * { max-width: var(--ts-width); margin-inline: auto; }
+
+  :where(text-search) h1 { margin: 0.5em 0 0.25em; font-size: 1.25em; font-weight: 600; line-height: 1.2; }
+  :where(text-search) h1 a { color: inherit; text-decoration: none; }
+  :where(text-search) header > p { margin: 0 0 1em; color: var(--ts-quiet); font-size: 0.85em; }
+  :where(text-search) header > output + p { margin: 0; font-family: var(--ts-font-ui); font-size: var(--ts-small); line-height: 1.4; }
+
+  :where(text-search) input[type="search"] {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: var(--ts-box-padding);
+    border: 0 solid var(--ts-box-line);
+    border-width: var(--ts-box-border);
+    border-radius: var(--ts-radius);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: var(--ts-box-size);
+    font-weight: var(--ts-box-weight);
+  }
+  :where(text-search) input[type="search"]:focus { outline: var(--ts-box-ring); outline-offset: 1px; }
+  :where(text-search) output {
+    display: block;
+    min-height: 1.4em;
+    margin-top: 0.4em;
+    color: var(--ts-quiet);
+    font-family: var(--ts-font-ui);
+    font-size: var(--ts-small);
+    line-height: 1.4;
+  }
+
+  /* A result is one button: its reference and place, then each line the search found, with the found words marked. */
+  :where(text-search) ol { margin: 1em 0; padding: 0; list-style: none; }
+  :where(text-search) ol > li { border-top: 1px solid var(--ts-rule); }
+  :where(text-search) li > button {
+    display: block;
+    width: 100%;
+    padding: 0.7em 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  :where(text-search) li > button:focus-visible { outline: 2px solid var(--ts-accent); }
+  :where(text-search) li > button > span { display: block; }
+  :where(text-search) li > a {
+    display: block;
+    width: fit-content;
+    margin-bottom: 0.7em;
+    color: var(--ts-accent);
+    font-family: var(--ts-font-ui);
+    font-size: var(--ts-small);
+    line-height: 1.4;
+  }
+  :where(text-search) cite {
+    display: block;
+    color: var(--ts-accent);
+    font-family: var(--ts-font-ui);
+    font-size: var(--ts-small);
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  :where(text-search) cite span { color: var(--ts-quiet); font-weight: 400; }
+  :where(text-search) mark { background: var(--ts-mark); color: var(--ts-found); font-weight: var(--ts-found-weight); border-radius: 2px; }
+
+  /* An opened result: the lines around it, the found one marked, with each speaker named and stage directions in italic. */
+  :where(text-search) blockquote { margin: 0 0 0.8em; padding: 0.5em 0 0.5em 0.9em; border-left: 2px solid var(--ts-rule); font-size: 0.95em; }
+  :where(text-search) blockquote p { margin: 0; }
+  :where(text-search) blockquote p[aria-current] { background: var(--ts-here); }
+  :where(text-search) blockquote b {
+    display: block;
+    color: var(--ts-quiet);
+    font-family: var(--ts-font-ui);
+    font-size: var(--ts-small);
+    font-weight: 400;
+    line-height: 1.6;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  :where(text-search) blockquote i { color: var(--ts-quiet); }
+
+  /* With no index, a page asks for files: dropped anywhere on it, or chosen. */
+  :where(text-search) section p { color: var(--ts-quiet); }
+  :where(text-search) label:has(input[type="file"]) { color: var(--ts-accent); text-decoration: underline; cursor: pointer; }
+  :where(text-search):state(dragging) { outline: 3px dashed var(--ts-accent); outline-offset: -0.5rem; }
+
+  :where(text-search) footer { margin-top: 2em; color: var(--ts-quiet); font-family: var(--ts-font-ui); font-size: var(--ts-small); line-height: 1.5; }
+  :where(text-search) footer a { color: inherit; }
+  :where(text-search) :is(kbd, code) { font-family: var(--ts-font-code); font-size: 0.95em; }
+}

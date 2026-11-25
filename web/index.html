@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Search any text</title>
+<meta name="description" content="Drop a folder of text and search it by whatever you remember, as you type, in your browser.">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* This page is the search alone: it fills the window and follows the device's light or dark setting. */
+  :root { color-scheme: light dark; }
+  body { margin: 0; }
+  text-search { min-height: 100dvh; padding: max(1rem, env(safe-area-inset-top)) 1rem 3rem; }
+</style>
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<text-search theme="paper">
+  <header>
+    <h1><a href="./">Search any text</a></h1>
+    <p>Drop a folder of text and search it by whatever you remember, as you type, in your browser.</p>
+    <form role="search">
+      <input type="search" name="q" aria-label="Search" autocomplete="off" autocapitalize="off" spellcheck="false"
+             enterkeyhint="search" placeholder="Type whatever you remember" autofocus disabled>
+    </form>
+    <output>Loading…</output>
+    <p><kbd>/</kbd> to search · <kbd>↓</kbd> into the results · <kbd>j</kbd> <kbd>k</kbd> to move · <kbd>Enter</kbd> to expand · <kbd>o</kbd> to open its link · <kbd>Esc</kbd> back to the box</p>
+  </header>
+  <main>
+    <ol></ol>
+    <section hidden>
+      <p>Drop a folder or files anywhere on this page, or
+        <label>choose a folder<input type="file" webkitdirectory multiple hidden></label> or
+        <label>choose files<input type="file" multiple hidden></label>.
+        Text, Markdown, HTML and records in TSV all work. Nothing leaves your browser.</p>
+    </section>
+  </main>
+  <footer>
+    <p>wasm-static-search · <code>speaker:</code>, <code>in:</code> and <code>"exact words"</code> narrow it</p>
+  </footer>
+</text-search>
+</body>
+</html>

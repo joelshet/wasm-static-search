@@ -1,0 +1,31 @@
+# A modern word, then the words Shakespeare uses for it, weighted 0 to 100. Hand-written from general early
+# modern English, never from a particular line.
+before	ere
+often	oft
+why	wherefore:80
+where	whither:60	whence:40
+yes	ay	yea
+no	nay
+listen	hark:80
+here	hither:60
+there	thither:60
+nothing	naught	nought
+until	till
+among	amongst
+while	whilst
+perhaps	perchance	haply
+maybe	perchance	haply
+truly	forsooth:60	verily:60
+please	prithee:80
+think	methinks:70
+enemy	foe
+kill	slay
+killed	slain	slew
+people	folk
+soon	anon:60
+quickly	apace:60
+afraid	afeard
+help	succour:60
+cousin	coz
+goodbye	farewell	adieu
+hello	hail:60

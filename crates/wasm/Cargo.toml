@@ -1,0 +1,18 @@
+[package]
+name = "search-wasm"
+version = "0.1.0"
+license = "MIT"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = ["files"]
+# load_index, for an index built ahead of time, and index_files, for files dropped on the page. A page-search build
+# leaves them out and keeps only load_pages and search.
+files = []
+
+[dependencies]
+search-core = { path = "../core" }
+wasm-bindgen = "0.2"

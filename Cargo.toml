@@ -1,0 +1,10 @@
+[workspace]
+members = ["crates/core", "crates/cli", "crates/wasm"]
+resolver = "2"
+
+# The wasm is downloaded by every visitor who searches, so build it small.
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"

@@ -1,0 +1,12 @@
+[package]
+name = "search-cli"
+version = "0.1.0"
+license = "MIT"
+edition = "2021"
+
+[[bin]]
+name = "search-cli"
+path = "src/main.rs"
+
+[dependencies]
+search-core = { path = "../core" }

@@ -1,0 +1,23 @@
+# Rust build output
+target/
+
+# wasm-pack output
+pkg/
+# the page's engine is committed, so search-cli builds without wasm-pack
+!web/pkg/
+crates/wasm/pkg/
+
+# env / secrets
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+
+# downloaded sources
+examples/*/raw/
+
+# local notes and Claude Code config
+BRIEF.md
+.claude/

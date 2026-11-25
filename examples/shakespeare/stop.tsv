@@ -1,0 +1,6 @@
+# Function words: they add to a line that already matched but never pull one in. A query of nothing but these
+# counts them all.
+a	an	and	as	at	be	but	by	for	from	he	her	him	his	i	if	in	into	it	its	me	my	of	on	or	our	so	that
+the	their	them	then	there	they	this	to	unto	us	we	which	who	whom	with	you	your	shall	have	not	upon	what
+when	where	also	do	about	get	will	these	those	nor	neither	o	oh	how	whose	she	one	some	thing	very	can	could
+would	should	may	might	let	go	make

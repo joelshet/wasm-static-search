@@ -1,0 +1,6 @@
+# An ending, then what it becomes before stemming, so "loveth" meets "loves", "know'st" meets "know" and "lov'd"
+# meets "loved". An ending only goes when at least three letters, one a vowel, are left.
+eth	s
+'st
+est
+'d	ed
